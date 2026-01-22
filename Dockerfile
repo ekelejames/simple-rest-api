@@ -10,17 +10,20 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Copying dependencies from builder
-COPY --from=builder /root/.local /root/.local
+# Create non-root user first
+RUN useradd -m -u 1000 appuser
 
-COPY app.py .
+# Copy dependencies to appuser's home directory instead of root
+COPY --from=builder --chown=appuser:appuser /root/.local /home/appuser/.local
 
-# Making sure that the scripts in .local are usable
-ENV PATH=/root/.local/bin:$PATH
+# Copy application code
+COPY --chown=appuser:appuser app.py .
 
-# Create non-root user for security
-RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
+# Switch to non-root user
 USER appuser
+
+# Update PATH to use appuser's .local bin
+ENV PATH=/home/appuser/.local/bin:$PATH
 
 # Expose port
 EXPOSE 5000
