@@ -1,5 +1,10 @@
 # Task API - Quick User Guide
 
+## Deploy the App into an already existing kubernetes cluster
+```bash
+./deploy-script.sh deploy
+```
+
 ## Get Your External IP
 
 First, check your LoadBalancer's external IP:

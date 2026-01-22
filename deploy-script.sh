@@ -147,7 +147,7 @@ setup_metallb() {
     sleep 2
     
     # Create MetalLB IPAddressPool and L2Advertisement
-    log "⚙️  Configuring MetalLB IP address pool..."
+    log "Configuring MetalLB IP address pool..."
     
     # Retry logic for creating resources
     MAX_RETRIES=3
@@ -207,7 +207,7 @@ EOF
     METALLB_INSTALLED=true
     
     # Give MetalLB a moment to initialize
-    log "⏳ Waiting for MetalLB to initialize..."
+    log "Waiting for MetalLB to initialize..."
     sleep 5
 }
 
@@ -330,7 +330,7 @@ deploy_to_kubernetes() {
             echo
             
             # Test the health endpoint
-            log "🏥 Testing health endpoint..."
+            log "Testing health endpoint..."
             sleep 3  # Give the app a moment to be ready
             if curl -s --max-time 5 "http://${EXTERNAL_IP}/health" &> /dev/null; then
                 success "Application is responding and healthy!"
